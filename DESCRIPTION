@@ -1,0 +1,39 @@
+Package: labelcolor
+Title: Color label of a tree
+Version: 0.0.0.9000
+Authors@R: 
+    person("Noe", "DEMANGE", , "demange.noe@outlook.fr", role = c("cre", "aut"))
+Description: Make coloration of tree label.
+License: MIT + file LICENSE
+Depends: 
+    R (>= 2.10)
+Imports: 
+    ape,
+    circlize,
+    cluster,
+    config (>= 0.3.1),
+    dendextend,
+    DendSer,
+    dynamicTreeCut,
+    golem (>= 0.3.3),
+    grDevices,
+    seriation,
+    shiny (>= 1.7.2),
+    shinydashboard,
+    stats,
+    tools,
+    utils
+Suggests: 
+    knitr,
+    rmarkdown,
+    spelling,
+    testthat (>= 3.0.0)
+LinkingTo: 
+    Rcpp
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+RoxygenNote: 7.2.0
