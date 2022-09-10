@@ -5,9 +5,8 @@
 #' @import shiny
 #' @import shinydashboard
 #' @noRd
-options(shiny.maxRequestSize = 55 * 1024^2)
-
 app_ui <- function(request) {
+  options(shiny.maxRequestSize = 55 * 1024^2)
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
