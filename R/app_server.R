@@ -114,6 +114,7 @@ app_server <- function(input, output, session) {
   })
 
   output$pphylo <- renderPlot({
+    req(input$data)
     ape::plot.phylo(as.phylo(ch()), type = input$ptype, cex=input$cex, tip.color = unlist(unname(labr())))
     })
 
