@@ -17,40 +17,45 @@
 #' @noRd
 app_server <- function(input, output, session) {
   # Your application server logic
-  df <- eventReactive(input$val,{
-    if(input$data == "demo (RameauEnv_Foret2UNIMARC2.csv)"){
-      datf <- labelcolor::my_dataset
-      return(datf)
-    }else if(input$data == "Dataset binaire (.csv)"){
-      req(input$file)
-      if(tools::file_ext(input$file$name)=="csv"){
-            datf <- utils::read.csv(input$file$datapath,
-                           header = TRUE,
-                           sep = input$sep,
-                           row.names =1
-                           )
-            return(datf)
-      }else{
-        stop("Ce n'est pas un .csv")
-      }
-    }else{
-      req(input$file)
-      if(tools::file_ext(input$file$name)=="rds"){
-        datf <- readRDS(file(input$file$datapath))
-        return(datf)
-      }else{
-        stop("Ce n'est pas un .rds")
-      }
-    }
-  })
+  r <- reactiveValues()
+  # callModule(mod_data_loading_server,"data_loading_1", session=session, r=r)
+  mod_data_loading_server("data_loading_1",r)
+
+  # df <- eventReactive(input$val,{
+    # r$data <- input$data
+  #   if(input$data == "demo (RameauEnv_Foret2UNIMARC2.csv)"){
+  #     datf <- labelcolor::my_dataset
+  #     return(datf)
+  #   }else if(input$data == "Dataset binaire (.csv)"){
+  #     req(input$file)
+  #     if(tools::file_ext(input$file$name)=="csv"){
+  #       datf <- utils::read.csv(input$file$datapath,
+  #                               header = TRUE,
+  #                               sep = input$sep,
+  #                               row.names =1
+  #       )
+  #       return(datf)
+  #     }else{
+  #       stop("Ce n'est pas un .csv")
+  #     }
+  #   }else{
+  #     req(input$file)
+  #     if(tools::file_ext(input$file$name)=="rds"){
+  #       datf <- readRDS(file(input$file$datapath))
+  #       return(datf)
+  #     }else{
+  #       stop("Ce n'est pas un .rds")
+  #     }
+  #   }
+  # })
 
   dm <- reactive({
-    if(input$data == "Objet R de type dist (.rds)"){
-      dMat <- stats::as.dist(df())
+    if(r$data() == "Objet R de type dist (.rds)"){
+      dMat <- stats::as.dist(r$df())
       return(dMat)
     }
     else {
-      dMat <- stats::dist(x = t(as.matrix(df())), method = input$inDist)
+      dMat <- stats::dist(x = t(as.matrix(r$df())), method = input$inDist)
       return(dMat)
     }
   })
@@ -80,7 +85,7 @@ app_server <- function(input, output, session) {
     })
 
   group <- reactive({
-    names <- colnames(df()) #on recupere les noms des colonnes du data.frame
+    names <- colnames(r$df()) #on recupere les noms des colonnes du data.frame
     namesO <- names[get_order(ch())] #on organise les noms d'apres l'ordre du clustering hierarchique
     gr <- list()
     for(i in unique(cutch())){
@@ -107,14 +112,14 @@ app_server <- function(input, output, session) {
       }
     }
     lab[which(vcutch==0)]<-"black"
-    names <- colnames(df()) #on recupere les noms des colonnes du data.frame
+    names <- colnames(r$df()) #on recupere les noms des colonnes du data.frame
     namesO <- names[get_order(ch())] #on organise les noms d'apres l'ordre du clustering hierarchique
     names(lab) <- namesO #on attribue les noms au vecteur lab
     lab <- lab[names]
   })
 
   output$pphylo <- renderPlot({
-    req(input$data)
+    req(r$data())
     ape::plot.phylo(as.phylo(ch()), type = input$ptype, cex=input$cex, tip.color = unlist(unname(labr())))
     })
 

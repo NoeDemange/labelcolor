@@ -33,20 +33,41 @@ app_ui <- function(request) {
         fluidRow(
           tabItems(
             tabItem(tabName="dataset",
-              box(title = "Data", status = "primary", solidHeader = TRUE,
-                helpText("Choisissez si vous voulez utiliser le dataset demo, importer votre dataset (format .csv avce Header et nom des lignes en premiere colonne)
-                                    ou une matrice de distance (format .rds). Puis appuyez sur valider"),
-                radioButtons("data","",choices = c("demo (RameauEnv_Foret2UNIMARC2.csv)","Dataset binaire (.csv)","Matrice de distance (.rds)"), selected = "demo", inline=TRUE),
-                br(),
-                fileInput("file","Importer", accept = c(".csv",".rds")),
-                radioButtons("sep", "csv separateur",
-                              choices = c(Comma = ",",
-                              Semicolon = ";",
-                              Tab = "\t"),
-                              selected = ","),
-                actionButton("val","valider"),
-                width = 12
-                )
+                    # box(
+                    #   title = "Data",
+                    #   status = "primary",
+                    #   solidHeader = TRUE,
+                    #   helpText(
+                    #     "Choisissez si vous voulez utiliser le dataset demo, importer votre dataset (format .csv avce Header et nom des lignes en premiere colonne)
+                    #                 ou une matrice de distance (format .rds). Puis appuyez sur valider"
+                    #   ),
+                    #   radioButtons(
+                    #     "data",
+                    #     "",
+                    #     choices = c(
+                    #       "demo (RameauEnv_Foret2UNIMARC2.csv)",
+                    #       "Dataset binaire (.csv)",
+                    #       "Matrice de distance (.rds)"
+                    #     ),
+                    #     selected = "demo",
+                    #     inline = TRUE
+                    #   ),
+                    #   br(),
+                    #   fileInput("file", "Importer", accept = c(".csv", ".rds")),
+                    #   radioButtons(
+                    #     "sep",
+                    #     "csv separateur",
+                    #     choices = c(
+                    #       Comma = ",",
+                    #       Semicolon = ";",
+                    #       Tab = "\t"
+                    #     ),
+                    #     selected = ","
+                    #   ),
+                    #   actionButton("val", "valider"),
+                    #   width = 12
+                    # )
+                    mod_data_loading_ui("data_loading_1")
               ),
             tabItem(tabName= "plot",
                     box(title = "Inputs", status = "warning", solidHeader = TRUE, collapsible = TRUE,
