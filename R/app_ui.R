@@ -33,93 +33,11 @@ app_ui <- function(request) {
         fluidRow(
           tabItems(
             tabItem(tabName="dataset",
-                    # box(
-                    #   title = "Data",
-                    #   status = "primary",
-                    #   solidHeader = TRUE,
-                    #   helpText(
-                    #     "Choisissez si vous voulez utiliser le dataset demo, importer votre dataset (format .csv avce Header et nom des lignes en premiere colonne)
-                    #                 ou une matrice de distance (format .rds). Puis appuyez sur valider"
-                    #   ),
-                    #   radioButtons(
-                    #     "data",
-                    #     "",
-                    #     choices = c(
-                    #       "demo (RameauEnv_Foret2UNIMARC2.csv)",
-                    #       "Dataset binaire (.csv)",
-                    #       "Matrice de distance (.rds)"
-                    #     ),
-                    #     selected = "demo",
-                    #     inline = TRUE
-                    #   ),
-                    #   br(),
-                    #   fileInput("file", "Importer", accept = c(".csv", ".rds")),
-                    #   radioButtons(
-                    #     "sep",
-                    #     "csv separateur",
-                    #     choices = c(
-                    #       Comma = ",",
-                    #       Semicolon = ";",
-                    #       Tab = "\t"
-                    #     ),
-                    #     selected = ","
-                    #   ),
-                    #   actionButton("val", "valider"),
-                    #   width = 12
-                    # )
                     mod_data_loading_ui("data_loading_1")
               ),
             tabItem(tabName= "plot",
-                    box(title = "Inputs", status = "warning", solidHeader = TRUE, collapsible = TRUE,
-                        helpText(h2("Creation Phylogenie")),
-                        column(4,
-                               selectInput('inDist',"Distance", c("euclidean","maximum",
-                                                                  "manhattan","canberra",
-                                                                  "binary","minkowski"), selected = "binary"),
-                        ),
-                        column(4,
-                               selectInput('inHC',"Clustering hierarchique", c("ward.D","ward.D2",
-                                                                               "single","complete",
-                                                                               "average","mcquitty",
-                                                                               "median","centroid","diana")),
-                        ),
-                        column(4,
-                          radioButtons("ser","Seriation", choices = c("Oui","Non"), selected="Oui", inline = TRUE),
-                        ),
-                        br(),
-                        br(),
-                        br(),
-                        helpText(h2("Decoupe de l'arbre")),
-                        radioButtons("coupe", "methode", choices = c("cutree","cutreeHybrid"),
-                                     selected = "cutreeHybrid", inline = TRUE),
-                        column(6,
-                               helpText(h4("Parametre cutree")),
-                               numericInput("K","k",value=3,min=1)
-                               ),
-                        column(6,
-                               helpText(h4("Parametres cutreeHybrid")),
-                               numericInput("minsize", "MinClusterSize", value = 1, min = 1),
-                               sliderInput("ds", "deepSplit", value = 0, min = 0, max = 4),
-                        ),
-                        helpText(h2("Affichage Phylogenie")),
-                        column(6,
-                               selectInput('ptype',"type", c("radial", "phylogram",
-                                                      "cladogram", "fan",
-                                                      "unrooted","tidy")
-                                    ),
-                        ),
-                        column(6,
-                               numericInput("cex", "Cex", value = 0.3, min = 0),
-                        ),
-                        width=12
-                      ),
-                    box(title = "Plot", status = "primary", solidHeader = TRUE, collapsible = TRUE,
-                        plotOutput("pphylo", height = "600px"),
-                        width=12
-                    ),
-                    box(title = "clusters", status = "success", solidHeader = TRUE,
-                        verbatimTextOutput("clust"),
-                        width=12)
+                    mod_phylo_ui("phylo_1")
+
                     )
             )
           )

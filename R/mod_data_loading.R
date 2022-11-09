@@ -11,53 +11,38 @@
 #' @useDynLib labelcolor, .registration = TRUE
 mod_data_loading_ui <- function(id) {
   ns <- NS(id)
-  tagList(fluidPage(
-    box(
-      title = "Data",
-      status = "primary",
-      solidHeader = TRUE,
-      helpText(
+  tagList(
+    fluidPage(
+      box(title = "Data",status = "primary",solidHeader = TRUE,
+        helpText(
         "Choisissez si vous voulez utiliser le dataset demo, importer votre dataset (format .csv avce Header et nom des lignes en premiere colonne)
                                     ou une matrice de distance (format .rds). Puis appuyez sur valider"
-      ),
-      radioButtons(
-        "data",
-        "",
-        choices = c(
+        ),
+        radioButtons(ns("data"),"",choices = c(
           "demo (RameauEnv_Foret2UNIMARC2.csv)",
           "Dataset binaire (.csv)",
-          "Matrice de distance (.rds)"
-        ),
-        selected = "demo",
-        inline = TRUE
-      ),
-      br(),
-      fileInput("file", "Importer", accept = c(".csv", ".rds")),
-      radioButtons(
-        "sep",
-        "csv separateur",
-        choices = c(
-          Comma = ",",
-          Semicolon = ";",
-          Tab = "\t"
-        ),
-        selected = ","
-      ),
-      actionButton("val", "valider"),
-      width = 12
+          "Matrice de distance (.rds)"),
+        selected = "demo",inline = TRUE),
+        br(),
+        fileInput(ns("file"), "Importer", accept = c(".csv", ".rds")),
+        radioButtons(ns("sep"),"csv separateur",choices = c(Comma = ",",Semicolon = ";",Tab = "\t"),
+        selected = ","),
+        actionButton(ns("val"), "valider"),
+        width = 12
     )
-  ))
+   )
+  )
 }
 
 #' data_loading Server Functions
 #'
 #' @noRd
 #'
-# mod_data_loading_server <- function(input, output, session, r=r){
+# mod_data_loading_server <- function(input, output, session, r){
 mod_data_loading_server <- function(id,r=r) {
-  moduleServer(id, function(input, output, session) {
-    ns <- session$ns
-    r$df <- eventReactive(input$val,{
+moduleServer(id, function(input, output, session) {
+   ns <- session$ns
+   r$df <- eventReactive(input$val,{
       if(input$data == "demo (RameauEnv_Foret2UNIMARC2.csv)"){
         datf <- labelcolor::my_dataset
         return(datf)
@@ -84,7 +69,8 @@ mod_data_loading_server <- function(id,r=r) {
       }
     })
     r$data <- reactive({input$data})
-  })
+   })
+
 }
 
 ## To be copied in the UI
