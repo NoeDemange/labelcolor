@@ -19,10 +19,12 @@ Imports:
     grDevices,
     seriation,
     shiny (>= 1.7.2),
+    shinycustomloader,
     shinydashboard,
     stats,
     tools,
-    utils
+    utils,
+    waiter
 Suggests: 
     knitr,
     rmarkdown,

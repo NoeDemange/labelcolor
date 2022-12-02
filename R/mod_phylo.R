@@ -55,8 +55,8 @@ mod_phylo_ui <- function(id){
           width=12
       ),
       box(title = "Plot", status = "primary", solidHeader = TRUE, collapsible = TRUE,
-          plotOutput(ns("pphylo"), height = "600px"),
-          width=12
+          withLoader(plotOutput(ns("pphylo"), height = "600px")),
+          width=12#, waiter::use_waiter()
       ),
       box(title = "clusters", status = "success", solidHeader = TRUE,
           verbatimTextOutput(ns("clust")),
@@ -74,18 +74,22 @@ mod_phylo_server <- function(id, r=r){
     ns <- session$ns
 
     dm <- reactive({
-      # if(r$data() == "Objet R de type dist (.rds)"){
-      #   dMat <- stats::as.dist(r$df())
-      #   return(dMat)
-      # }
-      # else {
+      if(r$data() == "Objet R de type dist (.rds)"){
+        dMat <- stats::as.dist(r$df())
+        return(dMat)
+      }
+      else {
         dMat <- stats::dist(x = t(as.matrix(r$df())), method = input$inDist)
         return(dMat)
-      # }
+      }
     })
 
 
     r$ch <- reactive({
+      # waiter <- waiter::Waiter$new()
+      # waiter$show()
+      # on.exit(waiter$hide())
+
       if(input$inHC != "diana"){
         HC <- stats::hclust(dm(), method= input$inHC)
       } else{

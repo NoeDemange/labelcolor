@@ -29,6 +29,7 @@ usethis::use_package("seriation")
 usethis::use_package("stats")
 usethis::use_package("grDevices")
 usethis::use_package("utils")
+usethis::use_package("shinycustomloader")
 
 ## Add modules ----
 ## Create a module infrastructure in R/

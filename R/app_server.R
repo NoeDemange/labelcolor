@@ -12,6 +12,7 @@
 #' @import stats
 #' @import grDevices
 #' @import dendextend
+#' @import shinycustomloader
 #' @importFrom utils read.csv
 #' @useDynLib labelcolor, .registration = TRUE
 #' @noRd
