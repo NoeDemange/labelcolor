@@ -113,7 +113,9 @@ mod_phylo_server <- function(id, r=r){
       namesO <- names[get_order(r$ch())] #on organise les noms d'apres l'ordre du clustering hierarchique
       gr <- list()
       for(i in unique(cutch())){
+        if(i!=0){
         gr[[i]] <- names[which(cutch()==i)]
+        }
       }
       return(gr)
     })
