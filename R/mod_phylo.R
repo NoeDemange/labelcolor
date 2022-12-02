@@ -56,7 +56,7 @@ mod_phylo_ui <- function(id){
       ),
       box(title = "Plot", status = "primary", solidHeader = TRUE, collapsible = TRUE,
           withLoader(plotOutput(ns("pphylo"), height = "600px")),
-          width=12#, waiter::use_waiter()
+          width=12
       ),
       box(title = "clusters", status = "success", solidHeader = TRUE,
           verbatimTextOutput(ns("clust")),
@@ -86,10 +86,6 @@ mod_phylo_server <- function(id, r=r){
 
 
     r$ch <- reactive({
-      # waiter <- waiter::Waiter$new()
-      # waiter$show()
-      # on.exit(waiter$hide())
-
       if(input$inHC != "diana"){
         HC <- stats::hclust(dm(), method= input$inHC)
       } else{

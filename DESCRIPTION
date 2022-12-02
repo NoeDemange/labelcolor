@@ -23,8 +23,7 @@ Imports:
     shinydashboard,
     stats,
     tools,
-    utils,
-    waiter
+    utils
 Suggests: 
     knitr,
     rmarkdown,
