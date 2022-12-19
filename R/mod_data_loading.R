@@ -22,7 +22,7 @@ mod_data_loading_ui <- function(id) {
           "demo (RameauEnv_Foret2UNIMARC2.csv)",
           "Dataset binaire (.csv)",
           "Matrice de distance (.rds)"),
-        selected = "demo",inline = TRUE),
+        selected = "demo (RameauEnv_Foret2UNIMARC2.csv)",inline = TRUE),
         br(),
         fileInput(ns("file"), "Importer", accept = c(".csv", ".rds")),
         radioButtons(ns("sep"),"csv separateur",choices = c(Comma = ",",Semicolon = ";",Tab = "\t"),

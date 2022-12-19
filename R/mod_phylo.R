@@ -114,7 +114,7 @@ mod_phylo_server <- function(id, r=r){
       gr <- list()
       for(i in unique(cutch())){
         if(i!=0){
-        gr[[i]] <- names[which(cutch()==i)]
+        gr[[i]] <- namesO[which(cutch()==i)]
         }
       }
       return(gr)
