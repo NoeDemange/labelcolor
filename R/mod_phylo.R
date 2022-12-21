@@ -60,6 +60,7 @@ mod_phylo_ui <- function(id){
       ),
       box(title = "clusters", status = "success", solidHeader = TRUE,
           verbatimTextOutput(ns("clust")),
+          downloadButton(ns("down_data"), label = "Download clusters", style="color:#000000; display: block"),
           width=12)
     )
   )
@@ -148,6 +149,17 @@ mod_phylo_server <- function(id, r=r){
       req(r$data())
       ape::plot.phylo(as.phylo(r$ch()), type = input$ptype, cex=input$cex, tip.color = unlist(unname(r$labr())))
     })
+
+    output$down_data <- downloadHandler(
+      filename =  function() {
+        paste0("clusters_",input$inDist,"_",input$inHC,"_",input$coupe,".txt")
+      },
+      # content is a function with argument file. content writes the plot to the device
+      content = function(file) {
+        sink(file)
+        print(group())
+        sink()
+      })
 
     r$ptype <- reactive({input$ptype})
     r$cex <- reactive({input$cex})
