@@ -15,16 +15,14 @@ mod_data_loading_ui <- function(id) {
     fluidPage(
       box(title = "Data",status = "primary",solidHeader = TRUE,
         helpText(
-        "Choisissez si vous voulez utiliser le dataset demo, importer votre dataset (format .csv avce Header et nom des lignes en premiere colonne)
-                                    ou une matrice de distance (format .rds). Puis appuyez sur valider"
+        "Choisissez si vous voulez utiliser le dataset demo, importer votre dataset (format .csv avce Header et nom des lignes en premiere colonne). Puis appuyez sur valider"
         ),
         radioButtons(ns("data"),"",choices = c(
           "demo (RameauEnv_Foret2UNIMARC2.csv)",
-          "Dataset binaire (.csv)",
-          "Matrice de distance (.rds)"),
+          "Dataset binaire (.csv)"),
         selected = "demo (RameauEnv_Foret2UNIMARC2.csv)",inline = TRUE),
         br(),
-        fileInput(ns("file"), "Importer", accept = c(".csv", ".rds")),
+        fileInput(ns("file"), "Importer", accept = ".csv"),
         radioButtons(ns("sep"),"csv separateur",choices = c(Comma = ",",Semicolon = ";",Tab = "\t"),
         selected = ","),
         actionButton(ns("val"), "valider"),
@@ -46,7 +44,7 @@ moduleServer(id, function(input, output, session) {
       if(input$data == "demo (RameauEnv_Foret2UNIMARC2.csv)"){
         datf <- labelcolor::my_dataset
         return(datf)
-      }else if(input$data == "Dataset binaire (.csv)"){
+      }else{
         req(input$file)
         if(tools::file_ext(input$file$name)=="csv"){
           datf <- utils::read.csv(input$file$datapath,
@@ -57,14 +55,6 @@ moduleServer(id, function(input, output, session) {
           return(datf)
         }else{
           stop("Ce n'est pas un .csv")
-        }
-      }else{
-        req(input$file)
-        if(tools::file_ext(input$file$name)=="rds"){
-          datf <- readRDS(file(input$file$datapath))
-          return(datf)
-        }else{
-          stop("Ce n'est pas un .rds")
         }
       }
     })

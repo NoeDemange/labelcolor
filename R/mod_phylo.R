@@ -33,15 +33,15 @@ mod_phylo_ui <- function(id){
           helpText(h2("Decoupe de l'arbre")),
           radioButtons(ns('coupe'), "methode", choices = c("cutree","cutreeHybrid"),
                        selected = "cutreeHybrid", inline = TRUE),
-          column(6,
-                 helpText(h4("Parametre cutree")),
-                 numericInput(ns("K"),"k",value=3,min=1)
-          ),
-          column(6,
-                 helpText(h4("Parametres cutreeHybrid")),
-                 numericInput(ns("minsize"), "MinClusterSize", value = 1, min = 1),
-                 sliderInput(ns("ds"), "deepSplit", value = 0, min = 0, max = 4),
-          ),
+          parameter_tabs <- tabsetPanel(
+            id = ns("params"),
+            type = "hidden",
+            tabPanel("cutree",
+                     numericInput(ns("K"),"k",value=3,min=1)),
+            tabPanel("cutreeHybrid",
+                     numericInput(ns("minsize"), "MinClusterSize", value = 1, min = 1),
+                     sliderInput(ns("ds"), "deepSplit", value = 0, min = 0, max = 4),)
+            ),
           helpText(h2("Affichage Phylogenie")),
           column(6,
                  selectInput(ns('ptype'),"type", c("radial", "phylogram",
@@ -51,6 +51,9 @@ mod_phylo_ui <- function(id){
           ),
           column(6,
                  numericInput(ns("cex"), "Cex", value = 0.3, min = 0),
+          ),
+          column(12,
+          actionButton(ns("val"), "valider"),
           ),
           width=12
       ),
@@ -73,16 +76,14 @@ mod_phylo_ui <- function(id){
 mod_phylo_server <- function(id, r=r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    ##update UI
+    observeEvent(input$coupe, {
+      updateTabsetPanel(inputId = "params", selected = input$coupe)
+    })
 
     dm <- reactive({
-      if(r$data() == "Objet R de type dist (.rds)"){
-        dMat <- stats::as.dist(r$df())
-        return(dMat)
-      }
-      else {
         dMat <- stats::dist(x = t(as.matrix(r$df())), method = input$inDist)
         return(dMat)
-      }
     })
 
 
@@ -109,7 +110,7 @@ mod_phylo_server <- function(id, r=r){
       cth <- cth_numgroup(cth)
     })
 
-    group <- reactive({
+    group <- eventReactive(input$val,{
       names <- colnames(r$df()) #on recupere les noms des colonnes du data.frame
       namesO <- names[get_order(r$ch())] #on organise les noms d'apres l'ordre du clustering hierarchique
       gr <- list()
@@ -145,10 +146,14 @@ mod_phylo_server <- function(id, r=r){
       lab <- lab[names]
     })
 
-    output$pphylo <- renderPlot({
+    plot <- eventReactive(input$val,{
       req(r$data())
       ape::plot.phylo(as.phylo(r$ch()), type = input$ptype, cex=input$cex, tip.color = unlist(unname(r$labr())))
     })
+
+    output$pphylo <- renderPlot({
+      plot()
+      })
 
     output$down_data <- downloadHandler(
       filename =  function() {
