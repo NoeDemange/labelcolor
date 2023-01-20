@@ -40,8 +40,6 @@ library(labelcolor)
 labelcolor::run_app(options=list("launch.browser"=TRUE))
 ```
 
-<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
-
 ## Credits
 
 This app was developed by [Noe Demange](https://github.com/NoeDemange).
