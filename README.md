@@ -26,17 +26,6 @@ This is a basic example which shows you how to run the app:
 
 ``` r
 library(labelcolor)
-#> Registered S3 method overwritten by 'seriation':
-#>   method         from 
-#>   reorder.hclust gclus
-#> Warning: remplacement de l'importation précédente 'ape::degree' par
-#> 'circlize::degree' lors du chargement de 'labelcolor'
-#> Warning: remplacement de l'importation précédente 'ape::rotate' par
-#> 'dendextend::rotate' lors du chargement de 'labelcolor'
-#> Warning: remplacement de l'importation précédente 'ape::ladderize' par
-#> 'dendextend::ladderize' lors du chargement de 'labelcolor'
-#> Warning: remplacement de l'importation précédente 'dendextend::cutree' par
-#> 'stats::cutree' lors du chargement de 'labelcolor'
 labelcolor::run_app(options=list("launch.browser"=TRUE))
 ```
 
