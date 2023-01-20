@@ -20,8 +20,8 @@
 ##
 golem::fill_desc(
   pkg_name = "labelcolor", # The Name of the package containing the App
-  pkg_title = "Color label of a tree", # The Title of the package containing the App
-  pkg_description = "Make coloration of tree label.", # The Description of the package containing the App
+  pkg_title = "labelcolor", # The Title of the package containing the App
+  pkg_description = "Scalable visualization of groups within a hierarchical clustering from binary data matrix.", # The Description of the package containing the App
   author_first_name = "Noe", # Your First Name
   author_last_name = "DEMANGE", # Your Last Name
   author_email = "demange.noe@outlook.fr", # Your Email

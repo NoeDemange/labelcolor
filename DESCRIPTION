@@ -1,9 +1,8 @@
 Package: labelcolor
-Title: Color label of a tree
+Title: labelcolor
 Version: 0.0.0.9000
-Authors@R: 
-    person("Noe", "DEMANGE", , "demange.noe@outlook.fr", role = c("cre", "aut"))
-Description: Make coloration of tree label.
+Authors@R: person('Noe', 'DEMANGE', email = 'demange.noe@outlook.fr', role = c('cre', 'aut'))
+Description: Scalable visualization of groups within a hierarchical clustering from binary data matrix.
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)

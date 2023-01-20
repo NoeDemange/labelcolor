@@ -23,6 +23,7 @@ app_server <- function(input, output, session) {
   # callModule(mod_phylo_server,"phylo_1", session=session, r=r)
   mod_data_loading_server("data_loading_1",r=r)
   mod_phylo_server("phylo_1",r=r)
+  mod_information_server("information_1")
 
   output$down <- downloadHandler(
     filename =  function() {

@@ -34,7 +34,7 @@ usethis::use_package("shinycustomloader")
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module(name = "data_loading", with_test = TRUE) # Name of the module
-golem::add_module(name = "name_of_module2", with_test = TRUE) # Name of the module
+golem::add_module(name = "information", with_test = TRUE) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

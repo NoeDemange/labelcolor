@@ -17,16 +17,9 @@ app_ui <- function(request) {
         sidebarMenu(
           menuItem("Dataset", tabName = "dataset", icon = icon("fas fa-file-arrow-down")),
           menuItem("Plot", tabName = "plot", icon = icon("fas fa-tree")),
+          menuItem("Information", tabName = "information", icon = icon("fas fa-info-circle")),
           style = "font-size:20px"
         ),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
         column(12,
               downloadButton(outputId = "down", label = "Download the plot", style="color:#000000; display: block"),
               textInput("fname", "Nom du fichier", value = "Plot"),
@@ -41,8 +34,10 @@ app_ui <- function(request) {
               ),
             tabItem(tabName= "plot",
                     mod_phylo_ui("phylo_1")
-
-                    )
+              ),
+            tabItem(tabName= "information",
+                    mod_information_ui("information_1")
+              )
             )
           )
         )

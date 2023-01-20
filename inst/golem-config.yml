@@ -5,4 +5,4 @@ default:
 production:
   app_prod: yes
 dev:
-  golem_wd: !expr here::here()
+  golem_wd: D:/documents/stage/stage g.sapriel/Dossier_NOE/stage 2/shiny/labelcolor
